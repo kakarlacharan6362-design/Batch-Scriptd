@@ -1,0 +1,25 @@
+@echo off 
+
+cd /d "%~DP0%
+
+MsiExec.exe /X{7E06CAE9-D064-4893-8A51-649FC57D0B7E} /qn
+
+
+set folderPath=C:\ProgramData\IGE+XAO
+
+if exist %folderPath% (
+    echo Deleting the folder %folderPath% ...
+    rd /s /q %folderPath%
+    echo Folder has been deleted.
+) else (
+    echo Folder %folderPath% does not exist.
+)
+
+
+set "installerPath=Setup_SEE_Electrical_Expert_V4R3_SP5_485C_32BIT_Multilinguage_B8387.exe"
+start /wait %installerPath% /S /v/qn
+
+
+
+
+
