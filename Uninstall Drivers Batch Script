@@ -1,0 +1,10 @@
+@echo off
+
+set "script_dir=%~dp0"
+"%script_dir%\PL23XX-M_LogoDriver_Setup_v205_20210129.exe" 
+
+REM Uninstalling the Driver
+ 
+Pnputil.exe /Delete-Driver "%WINDIR%\System32\DriverStore\FileRepository\ser2pl.inf_amd64_8a89c06f6bce3622\ser2pl.inf" /Uninstall
+ 
+Pnputil.exe /Delete-Driver "%WINDIR%\System32\DriverStore\FileRepository\plser.inf_amd64_1e1daee0ef09b00c\plser.inf" /Uninstall
