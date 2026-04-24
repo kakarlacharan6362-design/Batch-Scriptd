@@ -1,0 +1,40 @@
+@echo off
+set "processes=CustomSettingCaptionDesigner.exe EspritFileManager.exe ESPRIT.KBMManager.exe ESPRIT.NCEDIT.exe ESPRIT.SettingsManager.exe hh.exe DpTechnology.SecurityManager.exe"
+
+for %%i in (%processes%) do (
+    tasklist | find /i "%%i" >nul 2>nul
+    if errorlevel 1 (
+        echo %%i is not running.
+    ) else (
+        echo %%i is running. Killing the process...
+        taskkill /F /IM "%%i" >nul 2>nul
+        echo %%i has been terminated.
+    )
+)
+
+REM Uninstall ESPRIT2022
+"%~dp0Installer.exe" /uninstall /quiet /norestart /log "%SYSTEMDRIVE%\O-I\logs\Hexagon_ESPRIT2022_19.22.222.3165_Uninstall.log"
+
+REM Uninstall ESPRITSecurityManager
+"%~dp0Deploy\DP Technology Security System\ESPRIT Security Manager.exe" /uninstall /quiet /norestart /log "%SYSTEMDRIVE%\O-I\logs\Hexagon_ESPRITSecurityManager_20.0.831.0_Uninstall.log"
+
+REM Uninstall ESPRIT2022AccessoriesPack
+MsiExec.exe /X {2D0D6EDD-0ADF-4CBC-836D-9CBE9A05B729} /qn /norestart /l*v "%SYSTEMDRIVE%\O-I\logs\Hexagon_ESPRIT2022AccessoriesPack_19.22.929_Uninstall.log"
+
+REM Uninstall ESPRITNotificationManager
+MsiExec.exe /X {F5899CD6-9565-4EDA-89A1-EA892E50983C} /qn /norestart /l*v "%SYSTEMDRIVE%\O-I\logs\Hexagon_ESPRITNotificationManager_1.0.325_Uninstall.log"
+
+REM D.P.Technology folder remove
+set "targetFolder=%ProgramFiles(x86)%\D.P.Technology\"
+
+if exist "%targetFolder%" (
+    echo Removing folder: "%targetFolder%" ...
+    rmdir /s /q "%targetFolder%"
+    echo Folder removal complete.
+) else (
+    echo Folder does not exist: "%targetFolder%"
+)
+
+
+
+
